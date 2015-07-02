@@ -22,7 +22,10 @@ module Devise
               session['cas_last_valid_ticket'] = ticket.ticket
               session['cas_last_valid_ticket_store'] = true
             end
-
+            
+            # save token to session
+            session[:authtoken] = ticket.extra_attributes["authtoken"]
+            
             success!(resource)
           elsif ticket.is_valid?
             username = ticket.respond_to?(:user) ? ticket.user : ticket.response.user
